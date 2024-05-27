@@ -1,11 +1,22 @@
 #%%
-exec(open("preprocessing.py").read())
-
-#%%
 from datasets import DatasetDict
 
 # Load the DatasetDict from the saved directory
-loaded_dataset_dict = DatasetDict.load_from_disk(".")
+data = DatasetDict.load_from_disk(".")
 
-# Now you have access to the loaded dataset dictionary
-# You can access individual splits like loaded_dataset_dict['train'], loaded_dataset_dict['validation'], loaded_dataset_dict['test']
+#%%
+from transformers import AutoModel, AutoTokenizer
+import torch
+
+model_ckpt = "distilbert-base-uncased"
+
+#%%
+tokenizer = AutoTokenizer.from_pretrained(model_ckpt)
+
+#function that tokenizes, we use padding and truncation in order to have consistent input dimensions for the model. This improves model training.
+def tokenize(batch):
+    return tokenizer(batch["text"], padding=True, truncation=True)
+
+#%%
+#map the function to all three datasets in the dict
+data_encoded = data.map(tokenize, batched=True, batch_size=None)

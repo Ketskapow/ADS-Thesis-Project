@@ -120,8 +120,6 @@ dataset_dict = DatasetDict({
     'test': test_dataset
 })
 
-# Now you have your train, validation, and test splits stored in the desired format
-
 
 #%%
 import os
@@ -136,4 +134,4 @@ if not os.path.exists(directory):
 with open(os.path.join(directory, 'df_per_year.pkl'), 'wb') as f:
     pickle.dump(df_per_year, f)
 
-dataset_dict.save_to_disk("./data/preprocessed")
+dataset_dict.save_to_disk(".")
