@@ -1,4 +1,4 @@
-name: c:\GitHub\ADS-Thesis-Project\.conda
+name: adsproject
 channels:
   - pytorch
   - nvidia
