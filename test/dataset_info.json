@@ -7,7 +7,7 @@
       "_type": "Value"
     },
     "label": {
-      "dtype": "float64",
+      "dtype": "int64",
       "_type": "Value"
     },
     "label_text": {
