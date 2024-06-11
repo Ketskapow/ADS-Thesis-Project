@@ -9,10 +9,6 @@
     "label": {
       "dtype": "int64",
       "_type": "Value"
-    },
-    "label_text": {
-      "dtype": "string",
-      "_type": "Value"
     }
   },
   "homepage": "",

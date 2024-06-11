@@ -75,15 +75,24 @@ for filename in os.listdir(directory):
         if year not in df_per_year:
             df_per_year[year] = df
         else:
-            # If dataframe for the year already exists, merge them
-            df_per_year[year] = pd.merge(df_per_year[year], df, on=['text', 'fuel_type', 'labels', 'year'], how='outer')
-
-# Now, df_per_year contains the merged dataframes without duplicates
+            merged_df = pd.merge(
+                df_per_year[year], df,
+                on=['text', 'fuel_type', 'year'],
+                how='left', suffixes=('', '_new')
+            )
+            # Update labels only where values are different
+            mask = (merged_df['labels_new'].notna()) & (merged_df['labels'] != merged_df['labels_new'])
+            df_per_year[year].loc[mask, 'labels'] = merged_df.loc[mask, 'labels_new']
+            # Drop 'labels_new' column if it exists
+            if 'labels_new' in df_per_year[year].columns:
+                df_per_year[year] = df_per_year[year].drop(columns=['labels_new'])
 
 
 # %%
 concatenated_df = pd.concat(df_per_year, ignore_index=True)
 
+#%%
+df_per_year['1960s'].head()
 #%%
 from sklearn.model_selection import train_test_split
 from datasets import Dataset, DatasetDict
@@ -95,17 +104,17 @@ X_train, X_val, y_train, y_val = train_test_split(X_train_val, y_train_val, test
 # Convert your splits into dictionaries
 train_data = {
     'text': X_train,
-    'label': y_train
+    'label': y_train.astype(int)
 }
 
 val_data = {
     'text': X_val,
-    'label': y_val
+    'label': y_val.astype(int)
 }
 
 test_data = {
     'text': X_test,
-    'label': y_test
+    'label': y_test.astype(int)
 }
 
 # Convert each split into a Dataset
@@ -124,14 +133,5 @@ dataset_dict = DatasetDict({
 #%%
 import os
 import pickle
-
-# Create the directory if it doesn't exist
-directory = './data/preprocessed/'
-if not os.path.exists(directory):
-    os.makedirs(directory)
-
-# Export df_per_year to a file
-with open(os.path.join(directory, 'df_per_year.pkl'), 'wb') as f:
-    pickle.dump(df_per_year, f)
 
 dataset_dict.save_to_disk(".")
