@@ -9,6 +9,14 @@
     "label": {
       "dtype": "int64",
       "_type": "Value"
+    },
+    "fuel_type": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "year": {
+      "dtype": "string",
+      "_type": "Value"
     }
   },
   "homepage": "",

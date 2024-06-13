@@ -90,31 +90,40 @@ for filename in os.listdir(directory):
 
 # %%
 concatenated_df = pd.concat(df_per_year, ignore_index=True)
+concatenated_df['labels'] = concatenated_df['labels'].astype(int)
 
 #%%
-df_per_year['1960s'].head()
+concatenated_df.head()
 #%%
 from sklearn.model_selection import train_test_split
 from datasets import Dataset, DatasetDict
 
-# Split your data into train, validation, and test sets using scikit-learn
-X_train_val, X_test, y_train_val, y_test = train_test_split(concatenated_df['text'], concatenated_df['labels'], test_size=0.2, random_state=42)
-X_train, X_val, y_train, y_val = train_test_split(X_train_val, y_train_val, test_size=0.2, random_state=42)
+# Split the DataFrame into train_val and test sets
+train_val_df, test_df = train_test_split(concatenated_df, test_size=0.2, random_state=42)
+
+# Split the train_val set into train and validation sets
+train_df, val_df = train_test_split(train_val_df, test_size=0.2, random_state=42)
 
 # Convert your splits into dictionaries
 train_data = {
-    'text': X_train,
-    'label': y_train.astype(int)
+    'text': train_df['text'],
+    'label': train_df['labels'],
+    'fuel_type':train_df['fuel_type'],
+    'year':train_df['year'],
 }
 
 val_data = {
-    'text': X_val,
-    'label': y_val.astype(int)
+    'text': val_df['text'],
+    'label': val_df['labels'],
+    'fuel_type': val_df['fuel_type'],
+    'year':val_df['year'],
 }
 
 test_data = {
-    'text': X_test,
-    'label': y_test.astype(int)
+    'text': test_df['text'],
+    'label': test_df['labels'],
+    'fuel_type': test_df['fuel_type'],
+    'year':test_df['year'],
 }
 
 # Convert each split into a Dataset
