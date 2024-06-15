@@ -93,16 +93,16 @@ concatenated_df = pd.concat(df_per_year, ignore_index=True)
 concatenated_df['labels'] = concatenated_df['labels'].astype(int)
 
 #%%
-concatenated_df.head()
+concatenated_df['labels'].value_counts()
 #%%
 from sklearn.model_selection import train_test_split
 from datasets import Dataset, DatasetDict
 
 # Split the DataFrame into train_val and test sets
-train_val_df, test_df = train_test_split(concatenated_df, test_size=0.2, random_state=42)
+train_df, test_df = train_test_split(concatenated_df, test_size=0.15, random_state=42)
 
-# Split the train_val set into train and validation sets
-train_df, val_df = train_test_split(train_val_df, test_size=0.2, random_state=42)
+# # Split the train_val set into train and validation sets
+# train_df, val_df = train_test_split(train_val_df, test_size=0.2, random_state=42)
 
 # Convert your splits into dictionaries
 train_data = {
@@ -112,12 +112,12 @@ train_data = {
     'year':train_df['year'],
 }
 
-val_data = {
-    'text': val_df['text'],
-    'label': val_df['labels'],
-    'fuel_type': val_df['fuel_type'],
-    'year':val_df['year'],
-}
+# val_data = {
+#     'text': val_df['text'],
+#     'label': val_df['labels'],
+#     'fuel_type': val_df['fuel_type'],
+#     'year':val_df['year'],
+# }
 
 test_data = {
     'text': test_df['text'],
@@ -128,13 +128,13 @@ test_data = {
 
 # Convert each split into a Dataset
 train_dataset = Dataset.from_dict(train_data)
-val_dataset = Dataset.from_dict(val_data)
+# val_dataset = Dataset.from_dict(val_data)
 test_dataset = Dataset.from_dict(test_data)
 
 # Store the datasets in a DatasetDict
 dataset_dict = DatasetDict({
     'train': train_dataset,
-    'validation': val_dataset,
+    # 'validation': val_dataset,
     'test': test_dataset
 })
 
