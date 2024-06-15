@@ -99,7 +99,7 @@ from sklearn.model_selection import train_test_split
 from datasets import Dataset, DatasetDict
 
 # Split the DataFrame into train_val and test sets
-train_df, test_df = train_test_split(concatenated_df, test_size=0.15, random_state=42)
+train_df, test_df = train_test_split(concatenated_df, test_size=0.2, random_state=42)
 
 # # Split the train_val set into train and validation sets
 # train_df, val_df = train_test_split(train_val_df, test_size=0.2, random_state=42)
