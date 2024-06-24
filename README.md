@@ -25,3 +25,6 @@ We selected two labelers to label the sentiment on each paragraph. This was done
 -	-1 and 0 -> -1
 -	+1 and 0 -> +1
 -	If two labelers had the same opinion, the label remained the same
+
+# How to run
+Preprocessing can be run by creating a data/ folder and placing the previously mentioned folders in this data folder. Model pipeline must be run in a colab environment
