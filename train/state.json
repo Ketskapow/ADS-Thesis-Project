@@ -4,7 +4,11 @@
       "filename": "data-00000-of-00001.arrow"
     }
   ],
+<<<<<<< HEAD
   "_fingerprint": "835288c517e54529",
+=======
+  "_fingerprint": "3976175e8d6f6c76",
+>>>>>>> parent of d287331 (Cleaned up github with only necessary files)
   "_format_columns": null,
   "_format_kwargs": {},
   "_format_type": null,
