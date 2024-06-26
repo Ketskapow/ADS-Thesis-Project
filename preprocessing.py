@@ -144,3 +144,5 @@ import os
 import pickle
 
 dataset_dict.save_to_disk(".")
+
+concatenated_df.to_csv('concatenated_df.csv')
