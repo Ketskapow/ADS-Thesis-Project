@@ -27,4 +27,4 @@ We selected two labelers to label the sentiment on each paragraph. This was done
 -	If two labelers had the same opinion, the label remained the same
 
 # How to run
-Preprocessing can be run by creating a data/ folder and placing the previously mentioned folders in this data folder. Model pipeline must be run in a colab environment
+Preprocessing can be run by creating a data/ folder and placing the previously mentioned folders in this data folder. Model pipeline must be run in a colab environment. Word2vec and RobBERT pipelines require different environment setups, use requirements_word2vec.txt for the word2vec model, and the requirements.txt for the RobBERT model. Pretrained Word2Vec model was taken from https://github.com/clips/dutchembeddings, using the 160-dimensional combined embeddings.
